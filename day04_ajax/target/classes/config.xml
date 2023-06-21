@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+ <!--  <properties resource="myBatis/db.properties"/> -->
+  
+  <typeAliases>
+  	<!-- 별칭 설정  -->
+  	<typeAlias type="kr.ezen.model.MemberDTO" alias="memberDTO"/>
+  </typeAliases>
+  
+<!--   <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments> -->
+  <!-- root-context에서 mapperLocations을 지정해 주었기 때문에 지워도됨 -->
+<!--   <mappers>
+    <mapper resource="myBatis/MemberMapper.xml"/>
+  </mappers> -->
+</configuration>

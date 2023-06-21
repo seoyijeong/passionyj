@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- 데이터베이스 관련설정(부모) -->	
+	
+	<!-- 1. MyBatis SqlSessionFactory 설정 -->
+	<!-- 스프링컨테이너에서 관리하는 객체를 beans라고함
+		# 객체 생성방법
+		Member member = new Member(): 자바코드
+		<bean id="member" class="a.Member"></bean> :xml
+		
+		//class를 불러오면 내부적으로 객체를 만들어준다.
+		Class memberClazz = Class.forName("a.Member")
+		member = memberClazz.newInstance();		
+
+		Class clazz = Class.forName("클래스명(자동으로 리턴해줌)") :reflection (동적객체생성)		
+		clazz.newInstance();
+		class Member {  //설계도
+		private String name;
+		private int age;
+		}		
+	 -->
+	 <!-- 히카리 설정시 주석처리 -->
+	 <!-- MuBatis SqlSessionFactory -->
+<!-- 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		property는 setter 메소드와 같다.
+		dataSource : driver /ref:dataSource 데이터 소스를 참조 
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="/WEB-INF/mybatis/config.xml"/>
+		<property name="mapperLocations" value="classpath:myBatis/*.xml"></property>
+	</bean> -->
+	
+<!-- 	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		db.properties 를 dataSource가 연결해준다.
+		<property name="driverClass" value="${driver}"></property>
+		<property name="url" value="${url}"></property>
+		<property name="username" value="${username}"></property>
+		<property name="password" value="${password}"></property>
+	</bean> -->
+	<!-- hikariCP 설정: DBCP라이브러이 -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="${driver}"></property>
+		<property name="jdbcUrl" value="${url}"></property>
+		<property name="username" value="${username}"></property>
+		<property name="password" value="${password}"></property>
+	</bean>
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+	</bean>
+		 <!-- MuBatis SqlSessionFactory -->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="/WEB-INF/mybatis/config.xml"/>
+		<property name="mapperLocations" value="classpath:myBatis/*.xml"></property>
+	</bean> 
+	
+	
+	<!-- db.properties 연결객체 : class:클래스명 을 입력하면 객체를 생성하여 연결-->
+	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<!-- value="locations의 위치" -->
+		<property name="locations" value="/WEB-INF/mybatis/db.properties"></property>
+	</bean>
+		<!-- <context:component-scan base-package="kr.ezen.member" /> -->
+			<context:component-scan base-package="model" />
+</beans>
