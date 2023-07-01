@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <typeAliases>
+  	<!-- 별칭 설정: 이 경로를 생략할 수 있는 방법이 Alias 이다. -->
+  	<typeAlias type="kr.ezen.bbs.domain.BoardDTO" alias="boardDTO"/>
+  </typeAliases>
+</configuration>
